@@ -7,8 +7,217 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <title>Ansible Automation Platform - Login</title>
+    
+    <style>
+        /* --- CSS Reset & Variables --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #151515;
+            --card-bg: #212121;
+            --rh-red: #EE0000;
+            --rh-red-hover: #CC0000;
+            --text-main: #F5F5F5;
+            --text-muted: #AEAEAE;
+            --border-color: #3C3C3C;
+            --focus-glow: rgba(238, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: 'Red Hat Text', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(238, 0, 0, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(238, 0, 0, 0.05) 0%, transparent 50%);
+        }
+
+        /* --- Container Layout --- */
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* --- Platform Brand Header --- */
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--rh-red);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 15px rgba(238, 0, 0, 0.4);
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 50%;
+            height: 50%;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .brand-title {
+            font-family: 'Red Hat Display', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            display: block;
+            line-height: 1;
+        }
+
+        .platform-title {
+            font-family: 'Red Hat Display', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* --- Glassy Login Card --- */
+        .login-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-card h2 {
+            font-family: 'Red Hat Display', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+        }
+
+        /* --- Form Design --- */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .input-group input {
+            background-color: #151515;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            width: 100%;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--rh-red);
+            box-shadow: 0 0 0 4px var(--focus-glow);
+        }
+
+        /* --- Remember Me / Forgot Password Layout --- */
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            accent-color: var(--rh-red);
+            width: auto;
+        }
+
+        .forgot-password {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-password:hover {
+            color: var(--rh-red);
+            text-decoration: underline;
+        }
+
+        /* --- Attractive Red Button --- */
+        .btn-login {
+            background-color: var(--rh-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(238, 0, 0, 0.2);
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .btn-login:hover {
+            background-color: var(--rh-red-hover);
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+        }
+
+        /* --- Footer Details --- */
+        .login-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #6A6A6A;
+            padding: 0 8px;
+        }
+    </style>
 </head>
 <body>
 
@@ -27,7 +236,7 @@
             <h2>Welcome back</h2>
             <p class="subtitle">Please log in to your account to continue.</p>
 
-            <form class="login-form">
+            <form class="login-form" onsubmit="event.preventDefault();">
                 <div class="input-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" placeholder="Enter your username" required>
